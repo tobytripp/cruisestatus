@@ -4,13 +4,14 @@ require 'rake'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = "cruisestatus"
-    gem.summary = %Q{TODO: one-line summary of your gem}
+    gem.name     = "cruisestatus"
+    gem.summary  = %Q{Check the build status on a cruise.rb server}
     gem.description = %Q{TODO: longer description of your gem}
-    gem.email = "toby.tripp+git@gmail.com"
+    gem.email    = "toby.tripp+git@gmail.com"
     gem.homepage = "http://github.com/tobytripp/cruisestatus"
-    gem.authors = ["Toby"]
+    gem.authors  = ["Toby Tripp"]
     gem.add_development_dependency "rspec", ">= 1.2.9"
+    gem.add_development_dependency "rr",    ">= 0.10.5"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
@@ -39,7 +40,7 @@ Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "cruisestatus #{version}"
+  rdoc.title = "CruiseStatus #{version}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
