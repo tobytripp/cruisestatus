@@ -6,7 +6,7 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name     = "cruisestatus"
     gem.summary  = %Q{Check the build status on a cruise.rb server}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.description = %Q{Allows scripts and applications to check the status of your project's build.}
     gem.email    = "toby.tripp+git@gmail.com"
     gem.homepage = "http://github.com/tobytripp/cruisestatus"
     gem.authors  = ["Toby Tripp"]
