@@ -11,6 +11,7 @@ begin
     gem.homepage = "http://github.com/tobytripp/cruisestatus"
     gem.authors  = ["Toby Tripp"]
     gem.add_development_dependency "rspec", ">= 1.2.9"
+    gem.add_development_dependency "git-precommit", ">= 1.0.0"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
@@ -33,6 +34,12 @@ end
 task :spec => :check_dependencies
 
 task :default => :spec
+
+require "git_precommit"
+GitPrecommit::PrecommitTasks.new
+
+task :default => ".git/hooks/pre-commit"
+task :precommit => :default
 
 require 'rake/rdoctask'
 Rake::RDocTask.new do |rdoc|

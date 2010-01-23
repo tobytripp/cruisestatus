@@ -13,7 +13,6 @@ require "open-uri"
 #     end
 #
 class CruiseStatus
-  
   # feed_url::
   #   URL pointing to a cruise.rb RSS feed.
   #   Example: "http://my.cruise.com/projects.rss"
