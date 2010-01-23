@@ -14,9 +14,10 @@ require "open-uri"
 #
 class CruiseStatus
   
-  # feed_url::  URL pointing to a cruise.rb RSS feed.
-  #             Example: http://my.cruise.com/projects.rss
-  #                  or: http://my.cruise.com/projects/myproject.rss
+  # feed_url::
+  #   URL pointing to a cruise.rb RSS feed.
+  #   Example: "http://my.cruise.com/projects.rss"
+  #   or: "http://my.cruise.com/projects/myproject.rss""
   # 
   def initialize( feed_url )
     project_feed = Kernel.open( feed_url ).read
