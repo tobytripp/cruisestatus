@@ -4,8 +4,8 @@ describe CruiseStatus do
   
   describe "on failed build" do
     before :each do
-      stub( io = Object.new ).read { FAIL_RESPONSE }
-      stub( Kernel ).open( 'ccrb.rss' ) { io }
+      io = mock( Object.new, :read => FAIL_RESPONSE )
+      Kernel.stub!(:open).with( 'ccrb.rss' ).and_return io
       
       @status = CruiseStatus.new 'ccrb.rss'
     end
@@ -21,8 +21,8 @@ describe CruiseStatus do
   
   describe "on passing build" do
     before :each do
-      stub( io = Object.new ).read { PASS_RESPONSE }
-      stub( Kernel ).open( 'ccrb.rss' ) { io }
+      io = mock( Object.new, :read => PASS_RESPONSE )
+      Kernel.stub!(:open).with( 'ccrb.rss' ).and_return io
       
       @status = CruiseStatus.new 'ccrb.rss'
     end
@@ -38,8 +38,8 @@ describe CruiseStatus do
   
   describe "on failed connection to cruise" do
     before :each do
-      stub( io = Object.new ).read { raise Exception, 'Cannot connect' }
-      stub( Kernel ).open( 'ccrb.rss' ) { io }
+      io = mock( Object.new ).stub!(:read).and_raise( Exception )
+      Kernel.stub!(:open).with( 'ccrb.rss' ).and_return io
       
       @status = CruiseStatus.new 'ccrb.rss'
     end
