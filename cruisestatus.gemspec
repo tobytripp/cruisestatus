@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{cruisestatus}
-  s.version = "1.0.0"
+  s.version = "1.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Toby Tripp"]
@@ -26,8 +26,9 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION",
      "bin/cruisestatus",
-     "lib/cruise_status.rb",
-     "spec/cruise_status_spec.rb",
+     "cruisestatus.gemspec",
+     "lib/cruisestatus.rb",
+     "spec/cruisestatus_spec.rb",
      "spec/spec.opts",
      "spec/spec_helper.rb"
   ]
@@ -37,7 +38,7 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.5}
   s.summary = %q{Check the build status on a cruise.rb server}
   s.test_files = [
-    "spec/cruise_status_spec.rb",
+    "spec/cruisestatus_spec.rb",
      "spec/spec_helper.rb"
   ]
 
