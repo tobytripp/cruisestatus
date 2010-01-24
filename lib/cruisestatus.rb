@@ -13,12 +13,27 @@ require "open-uri"
 #     end
 #
 class CruiseStatus
+  attr_reader :feed_url
+  
   # feed_url::
   #   URL pointing to a cruise.rb RSS feed.
   #   Example: "http://my.cruise.com/projects.rss"
   #   or: "http://my.cruise.com/projects/myproject.rss""
   # 
   def initialize( feed_url )
+    self.feed_url = feed_url
+    check
+  end
+  
+  # Check the given cruise feed and return true if all builds have passed.
+  # False otherwise.
+  def self.check( feed_url )
+    new( feed_url ).pass?
+  end
+  
+  # Update build status
+  #
+  def check
     project_feed = Kernel.open( feed_url ).read
     @doc = REXML::Document.new project_feed
   rescue Exception => e
@@ -40,5 +55,14 @@ class CruiseStatus
     }.map do |element|
       element.text.gsub( /(.*) build (.+) failed$/, '\1' )
     end
+  end
+  
+  def failure_message
+    self.failures.join ", "
+  end
+  
+  def feed_url=( url )
+    @feed_url = url
+    @feed_url += '/projects.rss' unless url =~ /\.rss$/
   end
 end

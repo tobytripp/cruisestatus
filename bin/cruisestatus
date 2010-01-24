@@ -1,25 +1,6 @@
 #!/usr/bin/env ruby -wKU
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require "cruisestatus"
+require "cruisestatus/command"
 
-unless ARGV.size == 1
-  $stderr.puts <<-EOS
-  cruisestatus: RSS feed url required.
-  Usage: cruisestatus CRUISE_RB_RSS_URL
-  
-    Reads the feed at CRUISE_RB_RSS_URL and reports if the build[s] passed.
-  
-  Example: cruisestatus http://my.cruiseserver.com/projects.rss
-  
-  EOS
-  exit 1
-end
-
-status = CruiseStatus.new ARGV.first
-
-unless status.pass?
-  abort "FAIL: #{status.failures.join( ', ' )}"
-else
-  puts "OK"
-  exit 0
-end
+exit CruiseStatus::Command.run!( ARGV )
