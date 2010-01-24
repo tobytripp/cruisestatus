@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{cruisestatus}
-  s.version = "1.1.6"
+  s.version = "1.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Toby Tripp"]
-  s.date = %q{2010-01-23}
+  s.date = %q{2010-01-24}
   s.default_executable = %q{cruisestatus}
   s.description = %q{Allows scripts and applications to check the status of your project's build.}
   s.email = %q{toby.tripp+git@gmail.com}
@@ -28,6 +28,8 @@ Gem::Specification.new do |s|
      "bin/cruisestatus",
      "cruisestatus.gemspec",
      "lib/cruisestatus.rb",
+     "lib/cruisestatus/command.rb",
+     "spec/cruisestatus/command_spec.rb",
      "spec/cruisestatus_spec.rb",
      "spec/spec.opts",
      "spec/spec_helper.rb"
@@ -38,7 +40,8 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.5}
   s.summary = %q{Check the build status on a cruise.rb server}
   s.test_files = [
-    "spec/cruisestatus_spec.rb",
+    "spec/cruisestatus/command_spec.rb",
+     "spec/cruisestatus_spec.rb",
      "spec/spec_helper.rb"
   ]
 
