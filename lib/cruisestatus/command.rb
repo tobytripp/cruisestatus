@@ -26,7 +26,6 @@ class CruiseStatus::Command
     opts.parse! argv
     
     if argv.empty?
-      puts "ARGS: #{argv.inspect}"
       abort opts.banner
     else
       status = CruiseStatus.new argv.last
