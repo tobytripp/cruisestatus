@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{cruisestatus}
-  s.version = "1.2.0"
+  s.version = "1.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Toby Tripp"]
-  s.date = %q{2010-01-24}
+  s.date = %q{2010-01-28}
   s.default_executable = %q{cruisestatus}
   s.description = %q{Allows scripts and applications to check the status of your project's build.}
   s.email = %q{toby.tripp+git@gmail.com}
