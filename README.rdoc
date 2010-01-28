@@ -24,6 +24,10 @@ build.  Use this to abort check-ins when the build has failed, for example.
   commit by itself I can ignore when I pull)
 * Send me a pull request.
 
+== Build Status
+
+http://runcoderun.com/tobytripp/cruisestatus
+
 == TODO
 
 * Cruise.java support?

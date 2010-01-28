@@ -43,7 +43,7 @@ class CruiseStatus::Command
   def self.are_you_sure?( status )
     puts "\n", "Build FAILURES: #{status.failure_message}"
     input = ""
-    while( input.strip.empty? )
+    while( input && input.strip.empty? )
       input = Readline.readline @prompt
     end
     
