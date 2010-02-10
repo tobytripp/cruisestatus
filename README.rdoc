@@ -61,10 +61,11 @@ For example:
     1
 
 You can use this to abort check-ins onto broken builds. (See the post-commit
-hook in http://github.com/tobytripp/git-pre-commit for example). As you know,
-if the CI build is broken, no one should be checking in new code unless
-they're fixing the build. You can use +cruisestatus+ to help keep developers
-honest in that regard.
+hook in
+http://github.com/tobytripp/git-pre-commit/blob/master/git-hooks/post-commit
+for example). As you know, if the CI build is broken, no one should be
+checking in new code unless they're fixing the build. You can use
++cruisestatus+ to help keep developers honest in that regard.
 
 == Note on Patches/Pull Requests
  
