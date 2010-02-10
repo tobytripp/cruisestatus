@@ -1,4 +1,3 @@
-require "readline"
 require "optparse"
 
 require "highline"
@@ -22,6 +21,7 @@ class CruiseStatus::Command
 
   Options:
   EOS
+  
   DEFAULT_PROMPT = "Are you <%= color 'sure', :underline %> you want to check in? (y/n): "
   
   attr_writer :prompt
