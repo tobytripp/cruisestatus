@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby -wKU
-$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 begin
   require "cruisestatus"
   require "cruisestatus/command"

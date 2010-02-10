@@ -1,13 +1,16 @@
 require "readline"
 require "optparse"
+require "cruisestatus/version"
 
 class CruiseStatus::Command
   DEFAULT_PROMPT = "Are you sure you want to check in? (y/n): "
   
   def self.run!( argv )
-    @prompt = nil
-    
+    @prompt  = nil
+
     opts = OptionParser.new do |o|
+      o.version = CruiseStatus::Version::STRING
+      o.release = CruiseStatus::Version::STRING
       o.banner = <<-EOS
   Usage: #{File.basename($0)} [options] BUILD_URL
 

@@ -3,6 +3,7 @@ require 'rake'
 
 begin
   require 'jeweler'
+  require "lib/cruisestatus/version"
   Jeweler::Tasks.new do |gem|
     gem.name        = "cruisestatus"
     gem.summary     = %Q{Check the build status on a cruise.rb server}
@@ -10,6 +11,7 @@ begin
     gem.email       = "toby.tripp+git@gmail.com"
     gem.homepage    = "http://github.com/tobytripp/cruisestatus"
     gem.authors     = ["Toby Tripp"]
+    gem.version     = CruiseStatus::Version::STRING
     gem.add_dependency "json_pure", ">= 1.2.0"
     gem.add_development_dependency "rspec", ">= 1.2.9"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings

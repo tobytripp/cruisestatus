@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{cruisestatus}
-  s.version = "1.2.1"
+  s.version = "1.3.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Toby Tripp"]
-  s.date = %q{2010-02-09}
+  s.date = %q{2010-02-10}
   s.default_executable = %q{cruisestatus}
   s.description = %q{Allows scripts and applications to check the status of your project's build.}
   s.email = %q{toby.tripp+git@gmail.com}
@@ -21,18 +21,22 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
      ".gitignore",
+     "CRUISE_URL",
      "LICENSE",
      "README.rdoc",
      "Rakefile",
-     "VERSION",
      "bin/cruisestatus",
      "cruisestatus.gemspec",
      "lib/cruisestatus.rb",
      "lib/cruisestatus/command.rb",
      "lib/cruisestatus/cruise_rb_parser.rb",
      "lib/cruisestatus/feed_parser.rb",
+     "lib/cruisestatus/run_code_run_parser.rb",
+     "lib/cruisestatus/version.rb",
      "spec/cruisestatus/command_spec.rb",
      "spec/cruisestatus/cruise_rb_parser_spec.rb",
+     "spec/cruisestatus/feed_parser_spec.rb",
+     "spec/cruisestatus/run_code_run_parser_spec.rb",
      "spec/cruisestatus_spec.rb",
      "spec/spec.opts",
      "spec/spec_helper.rb"
