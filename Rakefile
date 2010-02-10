@@ -32,6 +32,8 @@ Spec::Rake::SpecTask.new
 Spec::Rake::SpecTask.new(:rcov) do |spec|
   spec.pattern = 'spec/**/*_spec.rb'
   spec.rcov = true
+  
+  spec.rcov_opts = ['--exclude', 'lib\/spec,bin\/spec,gems,spec_helper']
 end
 
 task :spec => :check_dependencies

@@ -25,6 +25,22 @@ describe CruiseStatus::RunCodeRunParser do
       @parser.failures.should == ["cruisestatus"]
     end
   end
+  
+  describe "on connection error" do
+    before :each do
+      io = StringIO.new "/"
+      io.stub!( :read ).and_raise Exception
+      
+      @parser = CruiseStatus::RunCodeRunParser.new io
+      @parser.check
+    end
+    
+    it "reports the error as a failure" do
+      @parser.failures.should_not be_empty
+    end
+    
+  end
+  
 end
 
 RCR_PASS_RESPONSE = <<-EOS
