@@ -1,5 +1,4 @@
-require 'rexml/document'
-require "open-uri"
+require "cruisestatus/feed_parser"
 
 # Checks the status of one or more project builds on a cruisecontrol.rb
 # server.
@@ -26,7 +25,7 @@ class CruiseStatus
   end
   
   # Check the given cruise feed and return true if all builds have passed.
-  # False otherwise.
+  # Returns false otherwise.
   def self.check( feed_url )
     new( feed_url ).pass?
   end
@@ -34,27 +33,19 @@ class CruiseStatus
   # Update build status
   #
   def check
-    project_feed = Kernel.open( feed_url ).read
-    @doc = REXML::Document.new project_feed
-  rescue Exception => e
-    @failures = [e.message]
-    @doc = REXML::Document.new ""
+    @feed_parser.check
   end
  
   # True if all builds described by the feed are passing.
   # 
   def pass?
-    failures.empty?
+    @feed_parser.failures.empty?
   end
   
   # A list of failing builds.  Empty if all builds passed.
   # 
   def failures
-    @failures ||= REXML::XPath.match( @doc, "//item/title" ).select { |element|
-      element.text =~ /failed$/
-    }.map do |element|
-      element.text.gsub( /(.*) build (.+) failed$/, '\1' )
-    end
+    @feed_parser.failures
   end
   
   def failure_message
@@ -62,7 +53,6 @@ class CruiseStatus
   end
   
   def feed_url=( url )
-    @feed_url = url
-    @feed_url += '/projects.rss' unless url =~ /\.rss$/
+    @feed_parser = FeedParser.for( url )
   end
 end
