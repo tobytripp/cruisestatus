@@ -1,16 +1,14 @@
 require 'rexml/document'
 require "open-uri"
 
+require "cruisestatus/feed_parser"
+
 class CruiseStatus
-  class CruiseRbParser
+  class CruiseRbParser < FeedParser
     attr_accessor :url
     
-    def initialize( url )
-      self.url = url
-    end
-    
     def check
-      project_feed = Kernel.open( url ).read
+      project_feed = @feed.read
       @doc = REXML::Document.new project_feed
     rescue Exception => e
       @failures = [e.message]

@@ -1,6 +1,12 @@
 #!/usr/bin/env ruby -wKU
-$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
-require "cruisestatus"
-require "cruisestatus/command"
+# $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+begin
+  require "cruisestatus"
+  require "cruisestatus/command"
+rescue LoadError
+  require "rubygems"
+  require "cruisestatus"
+  require "cruisestatus/command"
+end  
 
 exit CruiseStatus::Command.run!( ARGV )

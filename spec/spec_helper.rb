@@ -1,11 +1,13 @@
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
-require 'cruisestatus'
-require 'cruisestatus/command'
 
 require "rubygems"
 require 'spec'
 require 'spec/autorun'
+
+require 'cruisestatus'
+require 'cruisestatus/command'
+
 
 Spec::Runner.configure do |config|
   def capture_stdout(&block)

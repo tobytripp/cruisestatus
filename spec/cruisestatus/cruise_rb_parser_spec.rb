@@ -1,12 +1,10 @@
 require "spec_helper"
+require "cruisestatus/cruise_rb_parser"
 
 describe CruiseStatus::CruiseRbParser do
   describe "on failed build" do
     before :each do
-      io = mock( Object.new, :read => FAIL_RESPONSE )
-      Kernel.stub!(:open).with( 'ccrb.rss' ).and_return io
-      
-      @parser = CruiseStatus::CruiseRbParser.new 'ccrb.rss'
+      @parser = CruiseStatus::CruiseRbParser.new StringIO.new( FAIL_RESPONSE )
       @parser.check
     end
     
@@ -17,10 +15,7 @@ describe CruiseStatus::CruiseRbParser do
   
   describe "on passing build" do
     before :each do
-      io = mock( Object.new, :read => PASS_RESPONSE )
-      Kernel.stub!(:open).with( 'ccrb.rss' ).and_return io
-      
-      @parser = CruiseStatus::CruiseRbParser.new 'ccrb.rss'
+      @parser = CruiseStatus::CruiseRbParser.new StringIO.new( PASS_RESPONSE )
       @parser.check
     end
     
@@ -31,10 +26,8 @@ describe CruiseStatus::CruiseRbParser do
   
   describe "on failed point build" do
     before :each do
-      io = mock( Object.new, :read => FAIL_RESPONSE_ON_POINT_REVISION )
-      Kernel.stub!(:open).with( 'ccrb.rss' ).and_return io
-      
-      @parser = CruiseStatus::CruiseRbParser.new 'ccrb.rss'
+      @parser = CruiseStatus::CruiseRbParser.
+        new StringIO.new( FAIL_RESPONSE_ON_POINT_REVISION )
       @parser.check
     end
     
@@ -43,12 +36,12 @@ describe CruiseStatus::CruiseRbParser do
     end
   end
   
-  describe "on failed connection to cruise" do
+  describe "on failed connection" do
     before :each do
-      io = mock( Object.new ).stub!(:read).and_raise( Exception )
-      Kernel.stub!(:open).with( 'ccrb.rss' ).and_return io
+      io = StringIO.new("")
+      io.stub!(:read).and_raise( Exception )
       
-      @parser = CruiseStatus.new 'ccrb.rss'
+      @parser = CruiseStatus.new io
       @parser.check
     end
     
