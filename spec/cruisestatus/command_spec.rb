@@ -36,10 +36,6 @@ describe CruiseStatus::Command do
     CruiseStatus::Command.run! []
   end
   
-  it "fails intentionally to break the build" do
-    fail
-  end
-  
   describe "when given the 'prompt' option" do
     before :each do
       @status.stub!( :pass? ).and_return false

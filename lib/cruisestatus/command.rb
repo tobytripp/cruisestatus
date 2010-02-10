@@ -22,7 +22,7 @@ class CruiseStatus::Command
 
   Options:
   EOS
-  DEFAULT_PROMPT = "Are you sure you want to check in? (y/n): "
+  DEFAULT_PROMPT = "Are you <%= color 'sure', :underline %> you want to check in? (y/n): "
   
   attr_writer :prompt
   
@@ -31,12 +31,13 @@ class CruiseStatus::Command
   end
 
   def are_you_sure?( status )
-    say "Build <%= color 'FAILURES', :red %>:"
+    say "Build <%= color 'FAILURES', :red, :bold %>:"
     say $terminal.color( status.failure_message, :red )
     agree( prompt ) ? 0 : 1
   end
   
   def initialize()
+    @prompt = false
   end
   
   def run( argv )
@@ -48,7 +49,7 @@ class CruiseStatus::Command
       status = CruiseStatus.new argv.last
       
       if status.pass?
-        say "Build <%= color 'PASSED', :green %>"
+        say "Build <%= color 'PASSED', :green, :bold %>"
         0
       else
         return are_you_sure?( status ) if @prompt
