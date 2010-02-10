@@ -4,7 +4,8 @@ require "cruisestatus/cruise_rb_parser"
 describe CruiseStatus::CruiseRbParser do
   describe "on failed build" do
     before :each do
-      @parser = CruiseStatus::CruiseRbParser.new StringIO.new( FAIL_RESPONSE )
+      @parser =
+        CruiseStatus::CruiseRbParser.new StringIO.new( CC_FAIL_RESPONSE )
       @parser.check
     end
     
@@ -15,7 +16,8 @@ describe CruiseStatus::CruiseRbParser do
   
   describe "on passing build" do
     before :each do
-      @parser = CruiseStatus::CruiseRbParser.new StringIO.new( PASS_RESPONSE )
+      @parser =
+        CruiseStatus::CruiseRbParser.new StringIO.new( CC_PASS_RESPONSE )
       @parser.check
     end
     
@@ -27,7 +29,7 @@ describe CruiseStatus::CruiseRbParser do
   describe "on failed point build" do
     before :each do
       @parser = CruiseStatus::CruiseRbParser.
-        new StringIO.new( FAIL_RESPONSE_ON_POINT_REVISION )
+        new StringIO.new( CC_FAIL_RESPONSE_ON_POINT_REVISION )
       @parser.check
     end
     
@@ -52,7 +54,7 @@ describe CruiseStatus::CruiseRbParser do
 end
 
 
-FAIL_RESPONSE = <<-EOS
+CC_FAIL_RESPONSE = <<-EOS
 <rss version="2.0">
   <channel>
     <title>CruiseControl RSS feed</title>
@@ -78,7 +80,7 @@ FAIL_RESPONSE = <<-EOS
 </rss>
 EOS
 
-FAIL_RESPONSE_ON_POINT_REVISION = <<-EOS
+CC_FAIL_RESPONSE_ON_POINT_REVISION = <<-EOS
 <rss version="2.0">
   <channel>
     <title>CruiseControl RSS feed</title>
@@ -97,7 +99,7 @@ FAIL_RESPONSE_ON_POINT_REVISION = <<-EOS
 </rss>
 EOS
 
-PASS_RESPONSE = <<-EOS
+CC_PASS_RESPONSE = <<-EOS
 <rss version="2.0">
   <channel>
     <title>CruiseControl RSS feed</title>
