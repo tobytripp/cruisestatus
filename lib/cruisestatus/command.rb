@@ -10,7 +10,7 @@ class CruiseStatus::Command
 
     opts = OptionParser.new do |o|
       o.version = CruiseStatus::Version::STRING
-      o.release = CruiseStatus::Version::STRING
+      o.release = CruiseStatus::Version::RELEASE
       o.banner = <<-EOS
   Usage: #{File.basename($0)} [options] BUILD_URL
 
