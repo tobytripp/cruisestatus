@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require "spec_helper"
 
 describe CruiseStatus::Command do
   before :each do
@@ -7,6 +7,13 @@ describe CruiseStatus::Command do
     @status.stub!( :failure_message ).and_return "FAILURES"
     
     CruiseStatus.stub!( :new ).with( "url" ).and_return @status
+    
+    @old_terminal = $terminal
+    $terminal = HighLine.new( StringIO.new, @output = StringIO.new )
+  end
+  
+  after :each do
+    $terminal = @old_terminal
   end
   
   it "passes the given url to the cruise status checker" do
@@ -25,10 +32,13 @@ describe CruiseStatus::Command do
   end
   
   it "aborts if no url is provided" do
-    CruiseStatus::Command.should_receive( :abort )
+    Kernel.should_receive( :abort )
     CruiseStatus::Command.run! []
   end
   
+  it "fails intentionally to break the build" do
+    fail
+  end
   
   describe "when given the 'prompt' option" do
     before :each do
@@ -36,37 +46,36 @@ describe CruiseStatus::Command do
     end
     
     it "passes the url to the status checker" do
-      Readline.should_receive( :readline ).
+      $terminal.should_receive( :agree ).
         with( CruiseStatus::Command::DEFAULT_PROMPT ).
-        and_return "y"
+        and_return true
+      CruiseStatus.should_receive( :new ).with( "url" ).and_return @status
 
       CruiseStatus::Command.run! %w[-p url]
     end
 
     it "prompts the user if the build has failed" do
-      Readline.should_receive( :readline ).
+      $terminal.should_receive( :agree ).
         with( CruiseStatus::Command::DEFAULT_PROMPT ).
-        and_return "y"
+        and_return true
 
-      output = capture_stdout do
-        CruiseStatus::Command.run! %w[-p url]
-      end
+      CruiseStatus::Command.run! %w[-p url]
       
-      output.should == "\nBuild FAILURES: FAILURES\n"
+      @output.string.should =~ /Build.*FAILURES/
     end
     
     it "returns 0 if the user enters 'y' at the prompt" do
-      Readline.should_receive( :readline ).
+      $terminal.should_receive( :agree ).
         with( CruiseStatus::Command::DEFAULT_PROMPT ).
-        and_return "y"
+        and_return true
       
       CruiseStatus::Command.run!( %w[-p url] ).should == 0
     end
     
     it "returns 1 if the user enters 'n' at the prompt" do
-      Readline.should_receive( :readline ).
+      $terminal.should_receive( :agree ).
         with( CruiseStatus::Command::DEFAULT_PROMPT ).
-        and_return "n"
+        and_return false
       
       CruiseStatus::Command.run!( %w[-p url] ).should == 1
     end

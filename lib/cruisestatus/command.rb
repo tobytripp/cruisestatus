@@ -1,20 +1,15 @@
 require "readline"
 require "optparse"
+
+require "highline"
+require "highline/import"
 require "cruisestatus/version"
 
 class CruiseStatus::Command
-  DEFAULT_PROMPT = "Are you sure you want to check in? (y/n): "
-  
-  def self.run!( argv )
-    @prompt  = nil
-
-    opts = OptionParser.new do |o|
-      o.version = CruiseStatus::Version::STRING
-      o.release = CruiseStatus::Version::RELEASE
-      o.banner = <<-EOS
+  USAGE = <<-EOS
   Usage: #{File.basename($0)} [options] BUILD_URL
 
-    Reads the feed at BUILD_URL and reports if the build[s] passed.
+  Reads the feed at BUILD_URL and reports if the build[s] passed.
 
   Examples:
     # CruiseControl.rb:
@@ -24,32 +19,36 @@ class CruiseStatus::Command
 
     # RunCodeRun.com:
     #{File.basename($0)} http://runcoderun.com/api/v1/json/myusername
-    
+
   Options:
-      EOS
-      
-      o.on(
-        "-p", "--prompt", "=[PROMPT]",
-        "Prompt the user if the build has failed.",
-        "#{File.basename($0)} will exit with a non-zero status if the user does not respond 'y' to the prompt."
-      ) do |val|
-        if val == true
-          @prompt = DEFAULT_PROMPT
-        else
-          @prompt = val
-        end
-      end
-    end
-    
-    opts.parse! argv
+  EOS
+  DEFAULT_PROMPT = "Are you sure you want to check in? (y/n): "
+  
+  attr_writer :prompt
+  
+  def self.run!( argv )
+    self.new.run( argv )
+  end
+
+  def are_you_sure?( status )
+    say "Build <%= color 'FAILURES', :red %>:"
+    say $terminal.color( status.failure_message, :red )
+    agree( prompt ) ? 0 : 1
+  end
+  
+  def initialize()
+  end
+  
+  def run( argv )
+    argv = parse_options( argv )
     
     if argv.empty?
-      abort opts.to_s
+      Kernel.abort @options.to_s
     else
       status = CruiseStatus.new argv.last
       
       if status.pass?
-        puts "Build PASSED"
+        say "Build <%= color 'PASSED', :green %>"
         0
       else
         return are_you_sure?( status ) if @prompt
@@ -58,13 +57,30 @@ class CruiseStatus::Command
     end
   end
   
-  def self.are_you_sure?( status )
-    puts "\n", "Build FAILURES: #{status.failure_message}"
-    input = ""
-    while( input && input.strip.empty? )
-      input = Readline.readline @prompt
+  def parse_options( argv )
+    @options = OptionParser.new do |option|
+      option.version = CruiseStatus::Version::STRING
+      option.release = CruiseStatus::Version::RELEASE
+      option.banner  = CruiseStatus::Command::USAGE
+
+      option.on(
+        "-p", "--prompt", "=[PROMPT]",
+        "Prompt the user if the build has failed.",
+        "#{File.basename($0)} will exit with a non-zero status if the user " \
+          "does not respond 'y' to the prompt."
+      ) do |val|
+        if val == true
+          self.prompt = DEFAULT_PROMPT
+        else
+          self.prompt = val
+        end
+      end
     end
-    
-    input.strip.downcase[0,1] == "y" ? 0 : 1
+
+    @options.parse! argv
+  end
+  
+  def prompt
+    @prompt || DEFAULT_PROMPT
   end
 end
