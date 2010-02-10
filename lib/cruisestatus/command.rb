@@ -9,24 +9,39 @@ class CruiseStatus::Command
     
     opts = OptionParser.new do |o|
       o.banner = <<-EOS
-      Usage: #{File.basename($0)} [options] CRUISE_RB_RSS_URL
+  Usage: #{File.basename($0)} [options] BUILD_URL
 
-        Reads the feed at CRUISE_RB_RSS_URL and reports if the build[s] passed.
+    Reads the feed at BUILD_URL and reports if the build[s] passed.
 
-      Examples:
-        #{File.basename($0)} http://my.cruiseserver.com
-        #{File.basename($0)} http://my.cruiseserver.com/projects.rss
-        #{File.basename($0)} http://my.cruiseserver.com/projects/myproject.rss
-      
+  Examples:
+    # CruiseControl.rb:
+    #{File.basename($0)} http://my.cruiseserver.com
+    #{File.basename($0)} http://my.cruiseserver.com/projects.rss
+    #{File.basename($0)} http://my.cruiseserver.com/projects/myproject.rss
+
+    # RunCodeRun.com:
+    #{File.basename($0)} http://runcoderun.com/api/v1/json/myusername
+    
+  Options:
       EOS
       
-      o.on( "-p", "--prompt" ) { |val| @prompt = DEFAULT_PROMPT }
+      o.on(
+        "-p", "--prompt", "=[PROMPT]",
+        "Prompt the user if the build has failed.",
+        "#{File.basename($0)} will exit with a non-zero status if the user does not respond 'y' to the prompt."
+      ) do |val|
+        if val == true
+          @prompt = DEFAULT_PROMPT
+        else
+          @prompt = val
+        end
+      end
     end
     
     opts.parse! argv
     
     if argv.empty?
-      abort opts.banner
+      abort opts.to_s
     else
       status = CruiseStatus.new argv.last
       

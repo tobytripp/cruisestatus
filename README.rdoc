@@ -1,9 +1,16 @@
 = Cruise Status
 
-CruiseStatus allows your Ruby scripts to check the status of your project's 
-build.  Use this to abort check-ins when the build has failed, for example.
+CruiseStatus allows your Ruby scripts to check the status of your project's
+build. Use this to abort check-ins when the build has failed, for example.
 
-== Example:
+CruiseStatus currently supports checking builds run on
+cruisecontrol.rb[http://cruisecontrolrb.thoughtworks.com/] or on
+runcoderun.com[http://runcoderun.com/].
+
+== CruiseControl.rb Example:
+
+To check a cruise.rb build, pass the url to the project RSS feed to
++CruiseStatus+:
 
     require "cruisestatus"
     
@@ -12,6 +19,29 @@ build.  Use this to abort check-ins when the build has failed, for example.
     else
       abort "Build failed…Boo!"
     end
+
+== RunCodeRun.com Example:
+
+To check a build on http://runcoderun.com, simply pass the url for the json
+API:
+
+    require "cruisestatus"
+    
+    if CruiseStatus.new( 'http://runcoderun.com/api/v1/json/tobytripp' ).pass?
+      puts "Build passed!"
+    else
+      abort "Build failed…boo!"
+    end
+
+== Command-line Usage:
+
+The gem's binary is +cruisestatus+.  Pass a URL to it and +cruisestatus+ will
+check the build status at that URL and return a non-zero status if any of the
+builds reported there have failed.
+
+Pass a `-p` option to prompt the user when a build has failed.  If the user
+enters 'y' at the prompt, +cruisestatus+ will return a zero status regardless
+of build failures.
 
 == Note on Patches/Pull Requests
  
@@ -31,7 +61,6 @@ http://runcoderun.com/tobytripp/cruisestatus
 == TODO
 
 * Cruise.java support?
-* Support for runcoderun.com
 
 == Copyright
 
