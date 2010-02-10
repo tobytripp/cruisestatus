@@ -10,7 +10,7 @@ describe CruiseStatus::Command do
   end
   
   it "passes the given url to the cruise status checker" do
-    CruiseStatus.should_receive( :new ).with "url"
+    CruiseStatus.should_receive( :new ).with( "url" ).and_return @status
     CruiseStatus::Command.run! ["url"]
   end
   
