@@ -24,11 +24,6 @@ describe CruiseStatus::RunCodeRunParser do
     it "reports failing builds in the response" do
       @parser.failures.should == ["cruisestatus"]
     end
-    
-    it "fails deliberately" do
-      fail "FAIL FAIL FAIL"
-    end
-    
   end
 end
 

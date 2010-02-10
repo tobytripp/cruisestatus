@@ -1,5 +1,10 @@
 require "open-uri"
-require "json"
+begin
+  require "json"
+rescue LoadError
+  require "rubygems"
+  require "json"
+end
 require "cruisestatus/feed_parser"
 
 class CruiseStatus

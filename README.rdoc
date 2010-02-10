@@ -43,6 +43,30 @@ Pass a `-p` option to prompt the user when a build has failed.  If the user
 enters 'y' at the prompt, +cruisestatus+ will return a zero status regardless
 of build failures.
 
+For example:
+    toby@Tobys-Mac:(git)cruisestatus[master]/$ cruisestatus -p http://runcoderun.com/api/v1/json/tobytripp
+
+    Build FAILURES: cruisestatus
+    Are you sure you want to check in? (y/n): y
+    
+    toby@Tobys-Mac:(git)cruisestatus[master]/$ echo $?
+    0
+    
+    toby@Tobys-Mac:(git)cruisestatus[master]/$ cruisestatus -p http://runcoderun.com/api/v1/json/tobytripp
+
+    Build FAILURES: cruisestatus
+    Are you sure you want to check in? (y/n): n
+    
+    toby@Tobys-Mac:(git)cruisestatus[master]/$ echo $?
+    1
+    toby@Tobys-Mac:(git)cruisestatus[master]/$
+
+You can use this to abort check-ins onto broken builds. (See the post-commit
+hook in http://github.com/tobytripp/git-pre-commit for example). As you know,
+if the CI build is broken, no one should be checking in new code unless
+they're fixing the build. You can use +cruisestatus+ to help keep developers
+honest in that regard.
+
 == Note on Patches/Pull Requests
  
 * Fork the project.
