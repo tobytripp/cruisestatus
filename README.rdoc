@@ -44,22 +44,21 @@ enters 'y' at the prompt, +cruisestatus+ will return a zero status regardless
 of build failures.
 
 For example:
-    toby@Tobys-Mac:(git)cruisestatus[master]/$ cruisestatus -p http://runcoderun.com/api/v1/json/tobytripp
+    $ cruisestatus -p http://runcoderun.com/api/v1/json/tobytripp
 
     Build FAILURES: cruisestatus
     Are you sure you want to check in? (y/n): y
     
-    toby@Tobys-Mac:(git)cruisestatus[master]/$ echo $?
+    $ echo $?
     0
     
-    toby@Tobys-Mac:(git)cruisestatus[master]/$ cruisestatus -p http://runcoderun.com/api/v1/json/tobytripp
+    $ cruisestatus -p http://runcoderun.com/api/v1/json/tobytripp
 
     Build FAILURES: cruisestatus
     Are you sure you want to check in? (y/n): n
     
-    toby@Tobys-Mac:(git)cruisestatus[master]/$ echo $?
+    $ echo $?
     1
-    toby@Tobys-Mac:(git)cruisestatus[master]/$
 
 You can use this to abort check-ins onto broken builds. (See the post-commit
 hook in http://github.com/tobytripp/git-pre-commit for example). As you know,
