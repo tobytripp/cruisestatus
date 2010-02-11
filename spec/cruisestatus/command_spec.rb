@@ -5,6 +5,7 @@ describe CruiseStatus::Command do
     @status = mock( "cruisestatus" )
     @status.stub!( :pass? ).and_return true
     @status.stub!( :failure_message ).and_return "FAILURES"
+    @status.stub!( :failures ).and_return %w[failedBuild1 failedBuild2]
     
     CruiseStatus.stub!( :new ).with( "url" ).and_return @status
     

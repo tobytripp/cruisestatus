@@ -31,8 +31,6 @@ class CruiseStatus::Command
   end
 
   def are_you_sure?( status )
-    say "Build <%= color 'FAILURES', :red, :bold %>:"
-    say $terminal.color( status.failure_message, :red )
     agree( prompt ) ? 0 : 1
   end
   
@@ -43,18 +41,20 @@ class CruiseStatus::Command
   def run( argv )
     argv = parse_options( argv )
     
-    if argv.empty?
-      Kernel.abort @options.to_s
+    return Kernel.abort( @options.to_s ) if argv.empty?
+
+    status = CruiseStatus.new argv.last
+    
+    if status.pass?
+      say "Build <%= color 'PASSED', :green, :bold %>"
+      0
     else
-      status = CruiseStatus.new argv.last
-      
-      if status.pass?
-        say "Build <%= color 'PASSED', :green, :bold %>"
-        0
-      else
-        return are_you_sure?( status ) if @prompt
-        1
+      say "Build <%= color 'FAILURES', :red, :bold %>:"
+      status.failures.each do |failure|
+        say "  * " + $terminal.color( failure, :red )
       end
+      return are_you_sure?( status ) if @prompt
+      1
     end
   end
   
